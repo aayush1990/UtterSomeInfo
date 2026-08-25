@@ -79,7 +79,7 @@ export function CruxDetail() {
   }
 
   return (
-    <div className="min-h-screen bg-background pb-32">
+    <div className="min-h-screen bg-background pb-8 md:pb-32">
       {/* Sticky Header */}
       <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl border-b border-border p-4 px-4 md:px-8 flex items-center justify-between">
         <button 
@@ -293,7 +293,7 @@ export function CruxDetail() {
       </main>
 
       {/* Resolution Bottom Sheet */}
-      <div className="fixed bottom-0 left-0 right-0 bg-card border-t border-border p-4 md:p-6 z-50 rounded-t-3xl shadow-[0_-20px_40px_rgba(0,0,0,0.3)]">
+      <div className="relative mt-10 bg-card border border-border p-4 md:fixed md:bottom-0 md:left-0 md:right-0 md:p-6 md:z-50 md:rounded-t-3xl shadow-sm md:shadow-[0_-20px_40px_rgba(0,0,0,0.3)]">
         <div className="max-w-3xl mx-auto">
           {deploymentStatus ? (
             <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-4">

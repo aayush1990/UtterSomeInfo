@@ -53,12 +53,12 @@ export function Layout({ children }: LayoutProps) {
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 pb-20 md:pb-0 overflow-x-hidden">
+      <main className="flex-1 pb-[calc(6rem+env(safe-area-inset-bottom))] md:pb-0 overflow-x-hidden">
         {children}
       </main>
 
       {/* Bottom Nav for Mobile */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 border-t border-border bg-background/80 backdrop-blur-lg z-50 px-2 py-2 flex items-center justify-around pb-safe">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 border-t border-border bg-background/95 backdrop-blur-lg z-50 px-2 pt-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))] flex items-center justify-around">
         {navItems.map((item) => {
           const isActive = location === item.href;
           return (
