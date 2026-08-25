@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @plugin "@tailwindcss/typography";
@@ -68,74 +68,72 @@
 }
 
 :root {
-  /* Rich, deliberate color identity: Deep Aubergine / Vermilion */
-  --background: 340 30% 8%;
-  --foreground: 340 20% 95%;
-  --card: 340 30% 11%;
-  --card-foreground: 340 20% 95%;
-  --card-border: 340 25% 18%;
-  --popover: 340 30% 11%;
-  --popover-foreground: 340 20% 95%;
-  --popover-border: 340 25% 18%;
-  --primary: 15 90% 60%;
+  --background: 210 18% 96%;
+  --foreground: 180 36% 13%;
+  --card: 0 0% 100%;
+  --card-foreground: 180 36% 13%;
+  --card-border: 190 18% 86%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 180 36% 13%;
+  --popover-border: 190 18% 86%;
+  --primary: 181 58% 24%;
   --primary-foreground: 0 0% 100%;
-  --secondary: 340 25% 18%;
-  --secondary-foreground: 340 20% 95%;
-  --muted: 340 25% 16%;
-  --muted-foreground: 340 15% 70%;
-  --accent: 340 25% 18%;
-  --accent-foreground: 340 20% 95%;
-  --destructive: 0 84% 60%;
+  --secondary: 180 20% 91%;
+  --secondary-foreground: 181 58% 24%;
+  --muted: 200 15% 92%;
+  --muted-foreground: 195 13% 42%;
+  --accent: 180 20% 91%;
+  --accent-foreground: 181 58% 24%;
+  --destructive: 4 68% 46%;
   --destructive-foreground: 0 0% 100%;
-  --border: 340 25% 18%;
-  --input: 340 25% 18%;
-  --ring: 15 90% 60%;
-  
-  --chart-1: 15 90% 60%;
-  --chart-2: 340 80% 60%;
-  --chart-3: 280 80% 60%;
-  --chart-4: 200 80% 60%;
-  --chart-5: 140 80% 60%;
+  --border: 190 18% 84%;
+  --input: 190 18% 84%;
+  --ring: 181 58% 24%;
 
-  --sidebar: 340 30% 9%;
-  --sidebar-foreground: 340 20% 95%;
-  --sidebar-border: 340 25% 16%;
-  --sidebar-primary: 15 90% 60%;
+  --chart-1: 181 58% 24%;
+  --chart-2: 169 42% 44%;
+  --chart-3: 34 76% 51%;
+  --chart-4: 205 55% 46%;
+  --chart-5: 4 68% 46%;
+
+  --sidebar: 180 24% 94%;
+  --sidebar-foreground: 180 36% 13%;
+  --sidebar-border: 190 18% 84%;
+  --sidebar-primary: 181 58% 24%;
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 340 25% 16%;
-  --sidebar-accent-foreground: 340 20% 95%;
-  --sidebar-ring: 15 90% 60%;
+  --sidebar-accent: 180 20% 88%;
+  --sidebar-accent-foreground: 181 58% 24%;
+  --sidebar-ring: 181 58% 24%;
 
-  --app-font-sans: 'Outfit', sans-serif;
-  --app-font-serif: 'Space Grotesk', sans-serif;
-  --app-font-mono: Menlo, monospace;
-  
-  --radius: 1rem;
+  --app-font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+  --app-font-serif: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+  --app-font-mono: 'SFMono-Regular', Consolas, monospace;
+
+  --radius: 0.65rem;
 }
 
-/* We force this theme on all modes to be bold and deliberate */
 .dark {
-  --background: 340 30% 8%;
-  --foreground: 340 20% 95%;
-  --card: 340 30% 11%;
-  --card-foreground: 340 20% 95%;
-  --card-border: 340 25% 18%;
-  --popover: 340 30% 11%;
-  --popover-foreground: 340 20% 95%;
-  --popover-border: 340 25% 18%;
-  --primary: 15 90% 60%;
+  --background: 180 22% 10%;
+  --foreground: 180 18% 94%;
+  --card: 180 20% 14%;
+  --card-foreground: 180 18% 94%;
+  --card-border: 180 14% 25%;
+  --popover: 180 20% 14%;
+  --popover-foreground: 180 18% 94%;
+  --popover-border: 180 14% 25%;
+  --primary: 169 42% 63%;
   --primary-foreground: 0 0% 100%;
-  --secondary: 340 25% 18%;
-  --secondary-foreground: 340 20% 95%;
-  --muted: 340 25% 16%;
-  --muted-foreground: 340 15% 70%;
-  --accent: 340 25% 18%;
-  --accent-foreground: 340 20% 95%;
-  --destructive: 0 84% 60%;
+  --secondary: 180 14% 24%;
+  --secondary-foreground: 180 18% 94%;
+  --muted: 180 14% 22%;
+  --muted-foreground: 180 10% 70%;
+  --accent: 180 14% 24%;
+  --accent-foreground: 180 18% 94%;
+  --destructive: 4 68% 60%;
   --destructive-foreground: 0 0% 100%;
-  --border: 340 25% 18%;
-  --input: 340 25% 18%;
-  --ring: 15 90% 60%;
+  --border: 180 14% 25%;
+  --input: 180 14% 25%;
+  --ring: 169 42% 63%;
 }
 
 @layer base {
@@ -148,5 +146,9 @@
   
   h1, h2, h3, h4, h5, h6 {
     @apply font-serif tracking-tight;
+  }
+
+  button, a, input, textarea {
+    -webkit-tap-highlight-color: transparent;
   }
 }

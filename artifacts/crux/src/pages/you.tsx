@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSafePreferences } from '@/lib/safe-hooks';
-import { Settings, User, Bell, Shield } from 'lucide-react';
+import { Link } from 'wouter';
+import { Settings, User, Bell, Shield, Mic2, ArrowRight } from 'lucide-react';
 
 export function You() {
   const { data: prefs, isLoading } = useSafePreferences();
@@ -59,13 +60,23 @@ export function You() {
         </section>
 
         {/* Notifications & Security */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-card border border-border rounded-3xl p-6 cursor-pointer hover:border-primary/50 transition-colors">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <Link href="/lab">
+            <div className="h-full cursor-pointer rounded-xl border border-primary/30 bg-primary p-6 text-primary-foreground transition-colors hover:bg-primary/90">
+              <div className="mb-4 flex items-center justify-between">
+                <Mic2 size={24} />
+                <ArrowRight size={18} />
+              </div>
+              <h4 className="mb-1 font-bold">Multimodal Lab</h4>
+              <p className="text-sm text-primary-foreground/75">Test voice, audio, image, and video inputs.</p>
+            </div>
+          </Link>
+          <div className="cursor-pointer rounded-xl border border-border bg-card p-6 transition-colors hover:border-primary/50">
             <Bell size={24} className="text-muted-foreground mb-4" />
             <h4 className="font-bold mb-1">Notifications</h4>
             <p className="text-sm text-muted-foreground">Manage push and email digests.</p>
           </div>
-          <div className="bg-card border border-border rounded-3xl p-6 cursor-pointer hover:border-primary/50 transition-colors">
+          <div className="cursor-pointer rounded-xl border border-border bg-card p-6 transition-colors hover:border-primary/50">
             <Shield size={24} className="text-muted-foreground mb-4" />
             <h4 className="font-bold mb-1">Integrations</h4>
             <p className="text-sm text-muted-foreground">Connected data sources.</p>

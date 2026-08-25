@@ -18,6 +18,7 @@ import { RunningLoops } from '@/pages/running';
 import { Portfolio } from '@/pages/portfolio';
 import { Learned } from '@/pages/learned';
 import { You } from '@/pages/you';
+import { MultimodalLab } from '@/pages/lab';
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,7 @@ function Router() {
           <Route path="/portfolio" component={Portfolio} />
           <Route path="/learned" component={Learned} />
           <Route path="/you" component={You} />
+          <Route path="/lab" component={MultimodalLab} />
           <Route component={NotFound} />
         </Switch>
       </RoutedErrorBoundary>
