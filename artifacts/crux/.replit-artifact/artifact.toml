@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Crux — Decision Interface"
+description = "A mobile-first decision interface for IncOS that turns autonomous agent work into a focused feed of consequential decisions, simulations, live conversations, deployments, and learned policies."
+version = "1.0.0"
+id = "artifacts/crux"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25563
+
+[services.development]
+run = "pnpm --filter @workspace/crux run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/crux", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/crux/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25563"
+BASE_PATH = "/"

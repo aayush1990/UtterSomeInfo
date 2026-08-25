@@ -6,6 +6,10 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface HealthStatus {
-  status: string;
+export interface Simulation {
+  label: string;
+  probability: number;
+  revenue: string;
+  supportLoad: string;
+  accent: string;
 }

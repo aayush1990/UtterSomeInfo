@@ -10,6 +10,10 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: cruxes
+    description: Consequential decisions surfaced by IncOS
+  - name: workspace
+    description: Portfolio, running loops, learned policies, and preferences
 paths:
   /healthz:
     get:
@@ -24,7 +28,151 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /cruxes:
+    get:
+      operationId: listCruxes
+      tags: [cruxes]
+      summary: List ranked Crux decisions
+      responses:
+        "200":
+          description: Ranked decisions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Crux"
+  /cruxes/{id}:
+    get:
+      operationId: getCrux
+      tags: [cruxes]
+      summary: Get a Crux decision
+      parameters:
+        - $ref: "#/components/parameters/CruxId"
+      responses:
+        "200":
+          description: Decision detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Crux"
+        "404":
+          description: Crux not found
+  /cruxes/{id}/resolve:
+    post:
+      operationId: resolveCrux
+      tags: [cruxes]
+      summary: Resolve a Crux and create a deployment artifact
+      parameters:
+        - $ref: "#/components/parameters/CruxId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResolutionInput"
+      responses:
+        "200":
+          description: Resolved decision
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Crux"
+  /cruxes/{id}/conversation:
+    post:
+      operationId: askCrux
+      tags: [cruxes]
+      summary: Ask an agent about a Crux
+      parameters:
+        - $ref: "#/components/parameters/CruxId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ConversationInput"
+      responses:
+        "200":
+          description: Agent response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConversationReply"
+  /portfolio:
+    get:
+      operationId: getPortfolio
+      tags: [workspace]
+      summary: Get active project positions
+      responses:
+        "200":
+          description: Portfolio summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Portfolio"
+  /running:
+    get:
+      operationId: getRunningLoops
+      tags: [workspace]
+      summary: Get autonomous agent loops
+      responses:
+        "200":
+          description: Running loops
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RunningLoop"
+  /learned:
+    get:
+      operationId: getLearnedPolicies
+      tags: [workspace]
+      summary: Get policies IncOS has learned
+      responses:
+        "200":
+          description: Learned policies
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Learned"
+  /preferences:
+    get:
+      operationId: getPreferences
+      tags: [workspace]
+      summary: Get feed preferences
+      responses:
+        "200":
+          description: Feed preferences
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Preferences"
+    patch:
+      operationId: updatePreferences
+      tags: [workspace]
+      summary: Update feed preferences
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PreferencesInput"
+      responses:
+        "200":
+          description: Updated preferences
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Preferences"
 components:
+  parameters:
+    CruxId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
   schemas:
     HealthStatus:
       type: object
@@ -33,4 +181,172 @@ components:
           type: string
       required:
         - status
+    CruxOption:
+      type: object
+      required: [id, label, probability, value, detail]
+      properties:
+        id: { type: string }
+        label: { type: string }
+        probability: { type: number }
+        value: { type: string }
+        detail: { type: string }
+    Evidence:
+      type: object
+      required: [source, detail, signal]
+      properties:
+        source: { type: string }
+        detail: { type: string }
+        signal: { type: string, enum: [positive, neutral, negative] }
+    AgentParticipant:
+      type: object
+      required: [name, role, initials, color]
+      properties:
+        name: { type: string }
+        role: { type: string }
+        initials: { type: string }
+        color: { type: string }
+    Simulation:
+      type: object
+      required: [label, probability, revenue, supportLoad, accent]
+      properties:
+        label: { type: string }
+        probability: { type: number }
+        revenue: { type: string }
+        supportLoad: { type: string }
+        accent: { type: string }
+    Crux:
+      type: object
+      required: [id, title, category, goal, owner, narratedSummary, urgency, deadline, expectedValue, attention, cost, risk, reversibility, confidence, recommendation, priorityReason, options, evidence, assumptions, unresolvedQuestions, simulations, participants, status]
+      properties:
+        id: { type: string }
+        title: { type: string }
+        category: { type: string }
+        goal: { type: string }
+        owner: { type: string }
+        narratedSummary: { type: string }
+        urgency: { type: string }
+        deadline: { type: string }
+        expectedValue: { type: string }
+        attention: { type: string }
+        cost: { type: string }
+        risk: { type: string }
+        reversibility: { type: string }
+        confidence: { type: number }
+        recommendation: { type: string }
+        priorityReason: { type: string }
+        options:
+          type: array
+          items: { $ref: "#/components/schemas/CruxOption" }
+        evidence:
+          type: array
+          items: { $ref: "#/components/schemas/Evidence" }
+        assumptions:
+          type: array
+          items: { type: string }
+        unresolvedQuestions:
+          type: array
+          items: { type: string }
+        simulations:
+          type: array
+          items: { $ref: "#/components/schemas/Simulation" }
+        participants:
+          type: array
+          items: { $ref: "#/components/schemas/AgentParticipant" }
+        status: { type: string, enum: [open, resolved, deploying, deployed] }
+        selectedResolution: { type: ["string", "null"] }
+        deploymentStatus: { type: ["string", "null"] }
+    ResolutionInput:
+      type: object
+      required: [optionId]
+      properties:
+        optionId: { type: string }
+    ConversationInput:
+      type: object
+      required: [message]
+      properties:
+        message: { type: string, minLength: 1 }
+        participant: { type: ["string", "null"] }
+    ConversationReply:
+      type: object
+      required: [agent, message, confidenceShift]
+      properties:
+        agent: { type: string }
+        message: { type: string }
+        confidenceShift: { type: number }
+    PortfolioProject:
+      type: object
+      required: [name, code, invested, agentHours, humanHours, probability, activeAgents, unresolved, progress, risk]
+      properties:
+        name: { type: string }
+        code: { type: string }
+        invested: { type: string }
+        agentHours: { type: number }
+        humanHours: { type: number }
+        probability: { type: number }
+        activeAgents: { type: number }
+        unresolved: { type: number }
+        progress: { type: number }
+        risk: { type: string }
+    Portfolio:
+      type: object
+      required: [totalInvested, totalExpectedValue, attentionSaved, projects]
+      properties:
+        totalInvested: { type: string }
+        totalExpectedValue: { type: string }
+        attentionSaved: { type: string }
+        projects:
+          type: array
+          items: { $ref: "#/components/schemas/PortfolioProject" }
+    RunningLoop:
+      type: object
+      required: [name, goal, progress, spend, time, lastAction, nextMilestone, status, agents]
+      properties:
+        name: { type: string }
+        goal: { type: string }
+        progress: { type: number }
+        spend: { type: string }
+        time: { type: string }
+        lastAction: { type: string }
+        nextMilestone: { type: string }
+        status: { type: string, enum: [running, waiting, paused] }
+        agents: { type: number }
+    LearnedPolicy:
+      type: object
+      required: [name, description, decisions, saved, enabled]
+      properties:
+        name: { type: string }
+        description: { type: string }
+        decisions: { type: number }
+        saved: { type: string }
+        enabled: { type: boolean }
+    Learned:
+      type: object
+      required: [weeklyDecisions, weeklySaved, policies]
+      properties:
+        weeklyDecisions: { type: number }
+        weeklySaved: { type: string }
+        policies:
+          type: array
+          items: { $ref: "#/components/schemas/LearnedPolicy" }
+    Preferences:
+      type: object
+      required: [mode, importance, urgency, learning, novelty, risk, cost]
+      properties:
+        mode: { type: string, enum: [operator, portfolio, explore, learn, contrarian] }
+        importance: { type: number }
+        urgency: { type: number }
+        learning: { type: number }
+        novelty: { type: number }
+        risk: { type: number }
+        cost: { type: number }
+    PreferencesInput:
+      type: object
+      properties:
+        mode: { type: string, enum: [operator, portfolio, explore, learn, contrarian] }
+        importance: { type: number }
+        urgency: { type: number }
+        learning: { type: number }
+        novelty: { type: number }
+        risk: { type: number }
+        cost: { type: number }
 

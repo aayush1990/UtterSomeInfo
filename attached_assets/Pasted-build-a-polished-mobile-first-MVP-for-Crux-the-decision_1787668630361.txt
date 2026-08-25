@@ -1,0 +1,436 @@
+build a polished mobile-first MVP for Crux, the decision interface for IncOS.
+
+Product Thesis
+
+Crux turns the continuous work of background AI agents into a personalized feed of consequential decisions.
+
+The user should not monitor agents. Agents work continuously against goals, budgets, constraints, and context. Crux identifies the few decisions that need human judgment, compresses the relevant context, and lets the user resolve them in seconds.
+
+The experience should feel like a hybrid of:
+
+* Instagram/TikTok: effortless vertical consumption
+* Threads: expandable conversations and competing viewpoints
+* Robinhood: clean quantitative decision information
+* Kalshi: probabilities, scenarios, and future outcomes
+* FaceTime: immediate live voice conversation with your agents
+* Roblox: playful, responsive, alive, and simulation-oriented
+
+Do NOT make this feel like an enterprise dashboard.
+
+Core Loop
+
+Every Crux has an underlying structured decision state:
+
+Context
+Crux
+Options
+Assumptions
+Uncertainties
+Evidence
+Simulation branches
+Predicted outcomes
+Cost
+Risk
+Confidence
+Decision
+Deployment status
+
+The UI progressively renders this information depending on how much attention the user gives it.
+
+Find → Resolve → Deploy → Learn
+
+Primary Experience: Crux Feed
+
+Launch directly into a full-screen vertical feed.
+
+Each Crux should initially require only 5–15 seconds to understand.
+
+Example:
+
+Should we extend CruxBench from 500 to 1,000 episodes?
+
+Narrated automatically by a voice agent:
+
+“Another 500 episodes will cost approximately $34. Based on the current confidence interval, there is only a 12% probability that the additional data changes which checkpoint wins.”
+
+Visually show:
+
+* Expected Value
+* Cost
+* Confidence
+* Urgency
+* Reversibility
+* Agent recommendation
+
+Primary actions:
+
+* Approve
+* Choose Alternative
+* Simulate
+* Ask
+* Defer
+
+Swipe up for the next Crux.
+
+Use deliberate confirmation before executing high-consequence decisions.
+
+Voice First
+
+Voice is a primary interface, not an accessibility add-on.
+
+Each Crux should have a short narrated briefing.
+
+Add a prominent Talk button that immediately opens a live conversation with the agent responsible for the decision.
+
+The conversation should feel like FaceTime without requiring video in V1:
+
+* Large animated agent identity
+* Live audio waveform
+* Streaming transcription
+* User can interrupt naturally
+* Agent responds conversationally
+* Decision data updates during the conversation
+* User can say things like:
+    * “Why?”
+    * “What changes your recommendation?”
+    * “What if we spend half as much?”
+    * “Show me the downside.”
+    * “Ask the research agent.”
+    * “Do it.”
+
+Architect voice/model providers behind interfaces so APIs can be swapped later. Use environment variables for credentials and graceful mock fallbacks.
+
+Progressive Epistemic Zoom
+
+The same Crux should support progressively richer representations:
+
+Level 0: Headline
+Level 1: Numbers / probability
+Level 2: Visual option carousel
+Level 3: Evidence and assumptions
+Level 4: Simulated futures
+Level 5: Live agent conversation
+
+Never overwhelm the user initially.
+
+The product should learn toward the minimum representation needed for a good decision.
+
+Crux Detail / Threads Mode
+
+Tapping into a Crux opens a conversational decision thread.
+
+Show contributions from persistent agent roles such as:
+
+* Your Twin
+* Operator
+* Skeptic
+* Finance
+* Research
+* Risk
+
+Example:
+
+Operator: “Shipping now unblocks the enterprise pilot.”
+
+Finance: “The expected revenue gain outweighs the engineering cost.”
+
+Skeptic: “That assumes support can absorb 2.4× onboarding volume.”
+
+Allow the user to ask the whole group or one agent questions through voice or text.
+
+Keep provenance visible.
+
+Simulation Mode
+
+A Crux can have multiple possible futures.
+
+Example:
+
+Ship Now
+
+Probability of target: 61%
+Expected Revenue: +$380K
+Support Load: +140%
+
+Delay 2 Weeks
+
+Probability of target: 73%
+Expected Revenue: +$310K
+Support Load: +40%
+
+Limited Rollout
+
+Probability of target: 78%
+Expected Revenue: +$340K
+Support Load: +55%
+
+Use simple animated charts and state changes in V1.
+
+Do NOT build generative video yet. Design the architecture so richer image/video/avatar renderers can later consume the same structured simulation object.
+
+Portfolio View
+
+Add a second major tab called Portfolio.
+
+Treat projects like positions:
+
+* Capital allocated
+* Compute spent
+* Human attention spent
+* Expected value
+* Confidence
+* Progress
+* Risks
+* Running agents
+
+Example:
+
+CruxBench
+$1,420 invested
+184 agent-hours
+3.2 human-hours
+71% probability of target
+4 active agents
+2 unresolved Cruxes
+
+This should feel inspired by Robinhood, but represent productive bets rather than securities.
+
+Running View
+
+Show that agents are continuously working.
+
+Examples:
+
+* CruxBench Evaluation: Running
+* MCP Launch: Running
+* Customer Research: 4 agents
+* Pricing Experiment: Waiting
+* AWS Spend Monitor: Running
+
+For each loop show:
+
+Goal
+Progress
+Spend
+Time
+Last action
+Next milestone
+Status
+
+Do not expose raw agent traces by default.
+
+IncOS should compress observability into actionable Cruxes.
+
+Learned View
+
+Create a tab called Learned.
+
+Show what IncOS no longer needs to ask the user.
+
+Example:
+
+“IncOS learned 17 recurring decisions from you this week.”
+
+“Estimated future attention saved: 2h 14m/week.”
+
+Show learned policies and allow the user to inspect or revoke delegation.
+
+This communicates compounding value.
+
+Context Graph
+
+Maintain a lightweight structured Context Graph in the backend.
+
+Core entities:
+
+* Goals
+* Projects
+* People
+* Agents
+* Evidence
+* Assumptions
+* Constraints
+* Decisions
+* Cruxes
+* Actions
+* Outcomes
+* Learned Policies
+
+Each Crux should reference its supporting graph objects.
+
+Do not build a complicated graph visualization in V1.
+
+Use the graph as the state layer underneath the experience.
+
+Decision Object
+
+Every Crux should use a structured schema including:
+
+* id
+* title
+* narrator summary
+* goal
+* decision owner
+* urgency
+* deadline
+* expected value
+* human attention estimate
+* cost
+* risk
+* reversibility
+* confidence
+* options
+* evidence
+* assumptions
+* unresolved questions
+* simulations
+* recommendation
+* agent/thread participants
+* selected resolution
+* deployment actions
+* final outcome
+
+Seed the app with 15–20 realistic Cruxes across product, research, finance, customer, risk, and operations.
+
+Feed Ranking
+
+For V1 implement an explicit scoring function rather than ML ranking.
+
+Rank Cruxes approximately by:
+
+Expected Value of Human Attention
+
+* Urgency
+* Probability Human Input Changes Outcome
+* Risk
+
+* Cognitive Cost
+* Redundancy
+
+Surface why something is ranked highly:
+
+“High Priority: $42K expected value at stake.”
+
+Later this can become a learned recommendation policy.
+
+My Algorithm
+
+Add a simple settings surface allowing users to tune their feed:
+
+* Importance
+* Urgency
+* Learning
+* Novelty
+* Risk
+* Cost
+
+Include preset modes:
+
+* Operator
+* Portfolio
+* Explore
+* Learn
+* Contrarian
+
+Deployment
+
+Resolving a Crux should create an executable Decision Artifact.
+
+Example:
+
+Decision: Stop evaluation at 500 episodes.
+
+Actions:
+
+* Stop remaining jobs
+* Preserve dataset
+* Generate final comparison
+* Update experiment status
+* Notify Research Agent
+
+In V1, simulate these deployments and show their state transitions.
+
+Create an integration abstraction for later MCP/API execution.
+
+Navigation
+
+Use five primary tabs:
+
+For You
+Highest-value Crux feed.
+
+Running
+Goals and autonomous agent loops.
+
+Portfolio
+Projects, resources, expected value, and performance.
+
+Learned
+Delegated decisions and accumulated capabilities.
+
+You
+Feed preferences, voice/avatar settings, integrations, and budget controls.
+
+The deep Studio experience can remain desktop-only later.
+
+Design
+
+Professional, premium, editorial, and extremely mobile-native.
+
+Avoid stereotypical AI gradients, glowing robots, excessive glassmorphism, and enterprise-dashboard density.
+
+Use:
+
+* Strong typography
+* Generous whitespace
+* Large numbers
+* Subtle motion
+* Full-screen vertical cards
+* High-quality microinteractions
+* Bottom-sheet details
+* Natural swipe gestures
+* Smooth spring animations
+* Haptics where supported
+* Dark and light modes
+
+Think modern Manhattan consumer-finance/social product, not SaaS administration.
+
+The first screen should look credible beside Instagram, Robinhood, or Kalshi.
+
+Technical Implementation
+
+Use:
+
+* Expo + React Native + TypeScript
+* Expo Router
+* Supabase/Postgres for persistence and authentication
+* Clean typed domain models
+* Provider abstraction for LLM, speech-to-text, and text-to-speech
+* Streaming responses where feasible
+* WebSocket/realtime updates for running agents
+* Seed/demo data so every experience works immediately
+* Responsive web build as a secondary target
+
+Structure the application so simulation engines, MCP integrations, observability providers, ranking models, avatar rendering, and generative-video rendering can be added later without rewriting the UI.
+
+MVP Success Criteria
+
+A first-time user should be able to:
+
+1. Open the app and understand their first Crux within 10 seconds.
+2. Hear a narrated decision briefing.
+3. Swipe through a personalized decision feed.
+4. Inspect options, evidence, probabilities, cost, and risk.
+5. Start a live voice conversation with an agent.
+6. Ask counterfactual questions and see the decision update.
+7. Resolve a Crux.
+8. Watch the resulting action move into deployment.
+9. See autonomous agents continuing to work.
+10. Understand how much money, machine work, and human attention IncOS is saving.
+11. See decisions IncOS has learned to handle without them.
+
+The core emotional experience should be:
+
+My agents are always working. IncOS is always watching. I only need to think when it matters.
+
+Build the complete polished clickable MVP with realistic seeded data. Prioritize interaction quality, voice, feed mechanics, and decision comprehension over backend complexity.
